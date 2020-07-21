@@ -1,0 +1,23 @@
+version: '3.0'
+services:
+  distributed-configuration-consul-example:
+    build: .
+    ports:
+      - "8080:8080"
+    container_name: consul-sample-app
+    networks:
+      - docker_network
+    depends_on:
+      - consul
+    environment:
+      - "spring.cloud.consul.host=consul"
+  consul:
+    image: consul
+    ports:
+      - "8500:8500"
+    container_name: consul
+    networks:
+      - docker_network
+networks:
+  docker_network:
+    driver: bridge
